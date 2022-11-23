@@ -1,0 +1,192 @@
+definitions:
+  models.CreateURLRequest:
+    properties:
+      expirationDays:
+        type: integer
+      longURL:
+        type: string
+      userID:
+        type: string
+    required:
+    - longURL
+    - userID
+    type: object
+  models.URL:
+    properties:
+      _id:
+        type: string
+      createdAt:
+        type: string
+      expiresAt:
+        type: string
+      longURL:
+        type: string
+      redirects:
+        type: integer
+      shortURL:
+        type: string
+      status:
+        type: string
+      updatedAt:
+        type: string
+      userID:
+        type: string
+    required:
+    - longURL
+    - userID
+    type: object
+info:
+  contact: {}
+paths:
+  /:
+    get:
+      description: get all URLs
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.URL'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get all URLs
+    patch:
+      consumes:
+      - application/json
+      description: Update URL
+      parameters:
+      - description: Create URL Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateURLRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update URL
+    post:
+      consumes:
+      - application/json
+      description: Create new Short URL
+      parameters:
+      - description: Create URL Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateURLRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Create new Short URL
+  /{shortURL}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete by ShortURL
+      parameters:
+      - description: Short URL
+        in: path
+        name: shortURL
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete URL
+  /{userID}:
+    get:
+      consumes:
+      - application/json
+      description: Get all URLs by User ID
+      parameters:
+      - description: User ID
+        in: path
+        name: userID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.URL'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get all URLs by User ID
+swagger: "2.0"

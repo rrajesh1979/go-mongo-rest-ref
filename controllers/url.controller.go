@@ -18,16 +18,17 @@ func NewURLController(urlService services.URLService) URLController {
 }
 
 // CreateURL
-// @Summary		Create new Short URL
-// @Description	Create new Short URL
-// @Accept			json
-// @Produce		json
-// @Param			request	body		models.CreateURLRequest	true	"Create URL Request"
-// @Success		200		{object}	string
-// @Failure		400		{object}	string
-// @Failure		404		{object}	string
-// @Failure		500		{object}	string
-// @Router			/ [post]
+//
+//	@Summary		Create new Short URL
+//	@Description	Create new Short URL
+//	@Accept			json
+//	@Produce		json
+//	@Param			request	body		models.CreateURLRequest	true	"Create URL Request"
+//	@Success		200		{object}	string
+//	@Failure		400		{object}	string
+//	@Failure		404		{object}	string
+//	@Failure		500		{object}	string
+//	@Router			/ [post]
 func (uc *URLController) CreateURL(ctx *gin.Context) {
 	var cure *models.CreateURLRequest
 	if err := ctx.ShouldBindJSON(&cure); err != nil {
@@ -45,14 +46,15 @@ func (uc *URLController) CreateURL(ctx *gin.Context) {
 }
 
 // FindURLs
-// @Summary		Get all URLs
-// @Description	get all URLs
-// @Produce		json
-// @Success		200	{array}		models.URL
-// @Failure		400	{object}	string
-// @Failure		404	{object}	string
-// @Failure		500	{object}	string
-// @Router			/ [get]
+//
+//	@Summary		Get all URLs
+//	@Description	get all URLs
+//	@Produce		json
+//	@Success		200	{array}		models.URL
+//	@Failure		400	{object}	string
+//	@Failure		404	{object}	string
+//	@Failure		500	{object}	string
+//	@Router			/ [get]
 func (uc *URLController) FindURLs(ctx *gin.Context) {
 	var page = ctx.DefaultQuery("page", "1")
 	var limit = ctx.DefaultQuery("limit", "10")
@@ -80,16 +82,17 @@ func (uc *URLController) FindURLs(ctx *gin.Context) {
 }
 
 // FindURLsByUserID
-// @Summary		Get all URLs by User ID
-// @Description	Get all URLs by User ID
-// @Accept			json
-// @Produce		json
-// @Param			userID	path		string	true	"User ID"
-// @Success		200		{array}		models.URL
-// @Failure		400		{object}	string
-// @Failure		404		{object}	string
-// @Failure		500		{object}	string
-// @Router			/{userID} [get]
+//
+//	@Summary		Get all URLs by User ID
+//	@Description	Get all URLs by User ID
+//	@Accept			json
+//	@Produce		json
+//	@Param			userID	path		string	true	"User ID"
+//	@Success		200		{array}		models.URL
+//	@Failure		400		{object}	string
+//	@Failure		404		{object}	string
+//	@Failure		500		{object}	string
+//	@Router			/{userID} [get]
 func (uc *URLController) FindURLsByUserID(ctx *gin.Context) {
 	var page = ctx.DefaultQuery("page", "1")
 	var limit = ctx.DefaultQuery("limit", "10")
@@ -118,16 +121,17 @@ func (uc *URLController) FindURLsByUserID(ctx *gin.Context) {
 }
 
 // DeleteURL
-// @Summary		Delete URL
-// @Description	Delete by ShortURL
-// @Accept			json
-// @Produce		json
-// @Param			shortURL	path		string	true	"Short URL"
-// @Success		200			{object}	string
-// @Failure		400			{object}	string
-// @Failure		404			{object}	string
-// @Failure		500			{object}	string
-// @Router			/{shortURL} [delete]
+//
+//	@Summary		Delete URL
+//	@Description	Delete by ShortURL
+//	@Accept			json
+//	@Produce		json
+//	@Param			shortURL	path		string	true	"Short URL"
+//	@Success		200			{object}	string
+//	@Failure		400			{object}	string
+//	@Failure		404			{object}	string
+//	@Failure		500			{object}	string
+//	@Router			/{shortURL} [delete]
 func (uc *URLController) DeleteURL(ctx *gin.Context) {
 	var shortURL = ctx.Param("shortURL")
 
@@ -141,16 +145,17 @@ func (uc *URLController) DeleteURL(ctx *gin.Context) {
 }
 
 // UpdateURL
-// @Summary		Update URL
-// @Description	Update URL
-// @Accept			json
-// @Produce		json
-// @Param			request	body		models.CreateURLRequest	true	"Create URL Request"
-// @Success		200		{object}	string
-// @Failure		400		{object}	string
-// @Failure		404		{object}	string
-// @Failure		500		{object}	string
-// @Router			/ [patch]
+//
+//	@Summary		Update URL
+//	@Description	Update URL
+//	@Accept			json
+//	@Produce		json
+//	@Param			request	body		models.CreateURLRequest	true	"Create URL Request"
+//	@Success		200		{object}	string
+//	@Failure		400		{object}	string
+//	@Failure		404		{object}	string
+//	@Failure		500		{object}	string
+//	@Router			/ [patch]
 func (uc *URLController) UpdateURL(ctx *gin.Context) {
 	var cure *models.CreateURLRequest
 	if err := ctx.ShouldBindJSON(&cure); err != nil {
