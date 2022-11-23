@@ -31,7 +31,6 @@ func (r *URLRouteController) URLRoute(rg *gin.RouterGroup) {
 	}
 
 	router := rg.Group(cfg.APIShort)
-	//log.Fatal(router)
 
 	router.GET("/", r.urlController.FindURLs)
 	router.POST("/", r.urlController.CreateURL)
