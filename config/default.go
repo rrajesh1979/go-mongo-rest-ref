@@ -13,6 +13,7 @@ type Config struct {
 	APIVersion     string `mapstructure:"API_VERSION"`
 	APIShort       string `mapstructure:"API_SHORT"`
 	Port           string `mapstructure:"PORT"`
+	Host           string `mapstructure:"HOST"`
 	Origin         string `mapstructure:"CLIENT_ORIGIN"`
 }
 
