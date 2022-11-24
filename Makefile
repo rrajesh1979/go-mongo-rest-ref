@@ -22,11 +22,11 @@ all: test build
 
 .PHONY: build
 build: deps
-	$(GOBUILD) -o $(BINARY_NAME) ./cmd/server
+	$(GOBUILD) -o $(BINARY_NAME) .
 
 .PHONY: install
 install: deps
-	$(GOINSTALL) ./cmd/server
+	$(GOINSTALL) .
 
 .PHONY: test
 test:
