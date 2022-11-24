@@ -48,3 +48,15 @@ jobs:
       - name: coverage
         working-directory: ./src/github.com/${{ github.repository }}
         run: bash <(curl -s https://codecov.io/bash)
+      - name: Generate coverage report
+        run: |
+          go test `go list ./... | grep -v examples` -coverprofile=coverage.txt -covermode=atomic
+
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage.txt
+          flags: unittests
+          name: codecov-umbrella
+          verbose: true
