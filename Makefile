@@ -30,22 +30,23 @@ install: deps
 
 .PHONY: test
 test:
-	echo "mode: count" > coverage.out
-	for PKG in $(PACKAGES); do \
-		$(GOCMD) test -v -covermode=count -coverprofile=profile.out $$PKG > tmp.out; \
-		cat tmp.out; \
-		if grep -q "^--- FAIL" tmp.out; then \
-			rm tmp.out; \
-			exit 1; \
-		elif grep -q "build failed" tmp.out; then \
-			rm tmp.out; \
-			exit; \
-		fi; \
-		if [ -f profile.out ]; then \
-			cat profile.out | grep -v "mode:" >> coverage.out; \
-			rm profile.out; \
-		fi; \
-	done
+	$(GOCMD) test -v ./... -covermode=count -coverprofile=coverage.out
+#	echo "mode: count" > coverage.out
+#	for PKG in $(PACKAGES); do \
+#		$(GOCMD) test -v ./... -covermode=count -coverprofile=profile.out $$PKG > tmp.out; \
+#		cat tmp.out; \
+#		if grep -q "^--- FAIL" tmp.out; then \
+#			rm tmp.out; \
+#			exit 1; \
+#		elif grep -q "build failed" tmp.out; then \
+#			rm tmp.out; \
+#			exit; \
+#		fi; \
+#		if [ -f profile.out ]; then \
+#			cat profile.out | grep -v "mode:" >> coverage.out; \
+#			rm profile.out; \
+#		fi; \
+#	done
 
 .PHONY: clean
 clean:
