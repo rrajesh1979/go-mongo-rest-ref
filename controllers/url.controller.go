@@ -61,13 +61,13 @@ func (uc *URLController) FindURLs(ctx *gin.Context) {
 
 	intPage, err := strconv.Atoi(page)
 	if err != nil {
-		ctx.JSON(http.StatusBadGateway, gin.H{"status": "fail", "message": err.Error()})
+		ctx.JSON(http.StatusBadGateway, gin.H{"status": "fail", "data": err.Error()})
 		return
 	}
 	intLimit, err := strconv.Atoi(limit)
 
 	if err != nil {
-		ctx.JSON(http.StatusBadGateway, gin.H{"status": "fail", "message": err.Error()})
+		ctx.JSON(http.StatusBadGateway, gin.H{"status": "fail", "data": err.Error()})
 		return
 	}
 
@@ -100,13 +100,13 @@ func (uc *URLController) FindURLsByUserID(ctx *gin.Context) {
 
 	intPage, err := strconv.Atoi(page)
 	if err != nil {
-		ctx.JSON(http.StatusBadGateway, gin.H{"status": "fail", "message": err.Error()})
+		ctx.JSON(http.StatusBadGateway, gin.H{"status": "fail", "data": err.Error()})
 		return
 	}
 	intLimit, err := strconv.Atoi(limit)
 
 	if err != nil {
-		ctx.JSON(http.StatusBadGateway, gin.H{"status": "fail", "message": err.Error()})
+		ctx.JSON(http.StatusBadGateway, gin.H{"status": "fail", "data": err.Error()})
 		return
 	}
 
@@ -170,10 +170,10 @@ func (uc *URLController) UpdateURL(ctx *gin.Context) {
 	}
 
 	if res.MatchedCount == 0 {
-		ctx.JSON(http.StatusNotFound, gin.H{"status": "fail", "message": "URL not found"})
+		ctx.JSON(http.StatusNotFound, gin.H{"status": "fail", "data": "URL not found"})
 		return
 	} else if res.ModifiedCount != 0 {
-		ctx.JSON(http.StatusOK, gin.H{"status": "success", "message": "URL updated"})
+		ctx.JSON(http.StatusOK, gin.H{"status": "success", "data": "URL updated"})
 		return
 	}
 }
