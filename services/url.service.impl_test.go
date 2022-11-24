@@ -57,7 +57,7 @@ func setupMongoDBContainer() (func(), *mongo.Client, error) {
 
 func TestURLService(t *testing.T) {
 	ctx := context.TODO()
-	config, err := config.LoadConfig("../")
+	cfg, err := config.LoadConfig("../")
 
 	terminateC, mongoClient, err := setupMongoDBContainer()
 	if err != nil {
@@ -65,18 +65,53 @@ func TestURLService(t *testing.T) {
 	}
 	defer terminateC()
 
-	urlCollection := mongoClient.Database(config.DBName).Collection(config.URLCollection)
-
+	urlCollection := mongoClient.Database(cfg.DBName).Collection(cfg.URLCollection)
 	urlService := NewURLService(urlCollection, ctx)
-	res, err := urlService.CreateURL(&models.CreateURLRequest{
+
+	// Test CreateURL
+	resIA, err := urlService.CreateURL(&models.CreateURLRequest{
 		UserID:         "rrajesh1979",
 		LongURL:        "https://www.google.com",
 		ExpirationDays: 10,
 	})
-	log.Printf("res: %v", res.InsertedID)
-	assert.NotEmpty(t, res.InsertedID)
+	log.Printf("res: %v", resIA.InsertedID)
+	assert.NotEmpty(t, resIA.InsertedID)
 
-	urls, _ := urlService.FindURLsByUserID("rrajesh1979", 1, 1)
-	log.Printf("resU: %v", len(urls))
-	assert.Equal(t, 1, len(urls))
+	resIB, err := urlService.CreateURL(&models.CreateURLRequest{
+		UserID:         "johndoe",
+		LongURL:        "https://www.mongodb.com",
+		ExpirationDays: 20,
+	})
+	log.Printf("res: %v", resIB.InsertedID)
+	assert.NotEmpty(t, resIB.InsertedID)
+
+	// Test FindURLsByUserID
+	urlsA, _ := urlService.FindURLsByUserID("rrajesh1979", 1, 1)
+	log.Printf("resU: %v", len(urlsA))
+	assert.Equal(t, 1, len(urlsA))
+
+	// Test FindURLByShortURL
+	urlsB, _ := urlService.FindURLsByUserID("johndoe", 0, 0)
+	log.Printf("resU: %v", len(urlsB))
+	assert.Equal(t, 1, len(urlsB))
+
+	// Test FindURLs
+	urlsC, _ := urlService.FindURLs(1, 2)
+	log.Printf("resU: %v", len(urlsC))
+	assert.Equal(t, 2, len(urlsC))
+
+	// Test DeleteURL
+	_, resD := urlService.DeleteURL("9qcffmSX")
+	log.Printf("resD: %v", resD)
+	assert.Equal(t, resD, "URL deleted")
+
+	// Test UpdateURL
+	resE, _ := urlService.UpdateURL(&models.CreateURLRequest{
+		UserID:         "johndoe",
+		LongURL:        "https://www.mongodb.com",
+		ExpirationDays: 30,
+	})
+	log.Printf("resE: %v", resE)
+	assert.Equal(t, resE.ModifiedCount, int64(1))
+
 }
