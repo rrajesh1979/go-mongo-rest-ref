@@ -19,11 +19,12 @@ func NewURLControllerRoute(urlController controllers.URLController) URLRouteCont
 }
 
 // URLRoute
-// @contact.name	API Support
-// @contact.url	http://www.swagger.io/support
-// @contact.email	support@swagger.io
-// @license.name	Apache 2.0
-// @license.url	http://www.apache.org/licenses/LICENSE-2.0.html
+//
+//	@contact.name	API Support
+//	@contact.url	http://www.swagger.io/support
+//	@contact.email	support@swagger.io
+//	@license.name	Apache 2.0
+//	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
 func (r *URLRouteController) URLRoute(rg *gin.RouterGroup) {
 	cfg, err := config.LoadConfig(".")
 	if err != nil {
@@ -37,6 +38,8 @@ func (r *URLRouteController) URLRoute(rg *gin.RouterGroup) {
 	router.GET("/:userID", r.urlController.FindURLsByUserID)
 	router.DELETE("/:shortURL", r.urlController.DeleteURL)
 	router.PATCH("/", r.urlController.UpdateURL)
+	router.GET("/get/:shortURL", r.urlController.FindLongURL)
+	router.GET("/redirect/:shortURL", r.urlController.RedirectLongURL)
 
 	//r := gin.Default()
 	docs.SwaggerInfo.BasePath = cfg.APIDefaultPath + cfg.APIVersion

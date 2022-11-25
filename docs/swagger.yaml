@@ -189,4 +189,70 @@ paths:
           schema:
             type: string
       summary: Get all URLs by User ID
+  /get/{shortURL}:
+    get:
+      consumes:
+      - application/json
+      description: Find Long URL to redirect
+      parameters:
+      - description: Short URL
+        in: path
+        name: shortURL
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.URL'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Find Long URL to redirect
+  /redirect/{shortURL}:
+    get:
+      consumes:
+      - application/json
+      description: Redirect to LongURL
+      parameters:
+      - description: Short URL
+        in: path
+        name: shortURL
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.URL'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Redirect to LongURL
 swagger: "2.0"

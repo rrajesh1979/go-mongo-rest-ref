@@ -120,6 +120,56 @@ func (uc *URLController) FindURLsByUserID(ctx *gin.Context) {
 
 }
 
+// FindLongURL
+//
+//	@Summary		Find Long URL to redirect
+//	@Description	Find Long URL to redirect
+//	@Accept			json
+//	@Produce		json
+//	@Param			shortURL	path		string	true	"Short URL"
+//	@Success		200			{array}		models.URL
+//	@Failure		400			{object}	string
+//	@Failure		404			{object}	string
+//	@Failure		500			{object}	string
+//	@Router			/get/{shortURL} [get]
+func (uc *URLController) FindLongURL(ctx *gin.Context) {
+	var shortURL = ctx.Param("shortURL")
+
+	longURL := uc.urlService.FindLongURL(shortURL)
+	if longURL.LongUrl == "" {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "URL not found"})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"status": "success", "data": longURL.LongUrl})
+}
+
+// RedirectLongURL
+//
+//	@Summary		Redirect to LongURL
+//	@Description	Redirect to LongURL
+//	@Accept			json
+//	@Produce		json
+//	@Param			shortURL	path		string	true	"Short URL"
+//	@Success		200			{array}		models.URL
+//	@Failure		400			{object}	string
+//	@Failure		404			{object}	string
+//	@Failure		500			{object}	string
+//	@Router			/redirect/{shortURL} [get]
+func (uc *URLController) RedirectLongURL(ctx *gin.Context) {
+	var shortURL = ctx.Param("shortURL")
+
+	longURL := uc.urlService.FindLongURL(shortURL)
+
+	//Check if URL is nil
+	if longURL == nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "URL not found"})
+		return
+	}
+
+	ctx.Redirect(http.StatusMovedPermanently, longURL.LongUrl)
+}
+
 // DeleteURL
 //
 //	@Summary		Delete URL

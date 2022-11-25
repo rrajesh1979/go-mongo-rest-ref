@@ -11,4 +11,5 @@ type URLService interface {
 	CreateURL(url *models.CreateURLRequest) (*mongo.InsertOneResult, error)
 	DeleteURL(shortURL string) (error, string)
 	UpdateURL(*models.CreateURLRequest) (*mongo.UpdateResult, error)
+	FindLongURL(shortURL string) *models.URL
 }

@@ -178,6 +178,25 @@ func (u URLServiceImpl) UpdateURL(r *models.CreateURLRequest) (*mongo.UpdateResu
 	return result, nil
 }
 
+func (u URLServiceImpl) FindLongURL(shortURL string) *models.URL {
+	//Find URL
+	opt := options.FindOneOptions{}
+	opt.Projection = bson.M{"_id": 0, "longURL": 1}
+	//TODO: Update Redirects
+	query := bson.M{"shortURL": shortURL, "status": "ACTIVE", "expiresAt": bson.M{"$gt": time.Now()}}
+
+	result := u.urlCollection.FindOne(u.ctx, query, &opt)
+
+	longURL := &models.URL{}
+
+	err := result.Decode(longURL)
+	if err != nil {
+		return nil
+	}
+
+	return longURL
+}
+
 func NewURLService(urlsCollection *mongo.Collection, ctx context.Context) URLService {
 	return &URLServiceImpl{urlsCollection, ctx}
 }
