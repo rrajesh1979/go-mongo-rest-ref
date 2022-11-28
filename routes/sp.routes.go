@@ -37,7 +37,7 @@ func (r *URLRouteController) URLRoute(rg *gin.RouterGroup) {
 	router.POST("/", r.urlController.CreateURL)
 	router.GET("/:userID", r.urlController.FindURLsByUserID)
 	router.DELETE("/:shortURL", r.urlController.DeleteURL)
-	router.PATCH("/", r.urlController.UpdateURL)
+	router.PUT("/", r.urlController.UpdateURL)
 	router.GET("/get/:shortURL", r.urlController.FindLongURL)
 	router.GET("/redirect/:shortURL", r.urlController.RedirectLongURL)
 
